@@ -5,7 +5,7 @@ import odlaw from '../images/resized/odlaw.jpg';
 import wizardwhitebeard from '../images/resized/wizardwhitebeard.jpg';
 import woof from '../images/resized/woof.jpg';
 
-const GameWindowTopBar = (props) => {
+const GameScreenTopBar = (props) => {
 	return (
 		<div id="top-bar">
 			<span>Find: </span>
@@ -36,4 +36,4 @@ const GameWindowTopBar = (props) => {
 	);
 };
 
-export default GameWindowTopBar;
+export default GameScreenTopBar;
