@@ -3,6 +3,7 @@ import GameSelectionWindow from './components/GameSelectionWindow';
 import GameScreen from './components/GameScreen';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import './App.css';
 
 const App = () => {
 	const [screen, setScreen] = useState('gameSelectionScreen');

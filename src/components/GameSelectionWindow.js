@@ -11,6 +11,7 @@ import image9 from '../images/resized/image9.jpg';
 import image10 from '../images/resized/image10.jpg';
 import icon from '../images/resized/icon.png';
 import PropTypes from 'prop-types';
+import './GameSelectionWindow.css';
 
 const GameSelectionWindow = (props) => {
 	const [chosenPicture, setChosenPicture] = useState(null);
@@ -64,7 +65,8 @@ const GameSelectionWindow = (props) => {
 					src={icon}
 					alt="Man with square jaw wearing glasses and a beanie."
 				/>
-				<h1>Where's Waldo</h1>
+				<h1 id="first-half">Where's </h1>
+				<h1 id="second-half">Waldo</h1>
 			</div>
 			<div id="bottom-section">
 				<span id="picture-selection-message">Select a picture to begin: </span>
