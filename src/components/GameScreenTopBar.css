@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500&family=Ranchers&display=swap');
 
 #top-bar {
-	width: 100%;
+	width: 100vw;
 	height: 50px;
 	position: sticky;
 	top: 0px;
@@ -13,6 +13,7 @@
 	justify-content: flex-start;
 	align-items: center;
 	font-family: 'Barlow Condensed', sans-serif;
+	z-index: 15;
 }
 
 #find-span {

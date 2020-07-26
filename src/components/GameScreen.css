@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500&family=Ranchers&display=swap');
+
 .hidden {
 	display: none;
 }
@@ -12,22 +14,61 @@
 	background-repeat: no-repeat;
 }
 
+#image-grid:after {
+	height: inherit;
+	width: inherit;
+	content: ' ';
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: 11;
+	background-color: rgba(0, 0, 0, 0);
+	transition: background-color 0.5s;
+}
+
+#image-grid.dim:after {
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
 .image-cell-container {
 	height: 60px;
 	width: 60px;
 	position: absolute;
+	border: 4pt solid transparent;
+	z-index: 10;
+	border-radius: 50%;
 }
 
 .drop-down {
+	z-index: 12;
 	position: absolute;
+	width: 75px;
+	background-color: white;
+	color: rgb(255, 42, 42);
+	padding: 0px;
+	border-radius: 5px;
+	font-family: 'Barlow Condensed', sans-serif;
+	border: 2pt ridge rgb(255, 42, 42);
+	font-size: 13px;
 }
 
 .image-cell-container.wrong {
-	border: 5pt solid red;
-	border-radius: 50%;
+	border-color: red;
 }
 
 .image-cell-container.found {
-	border: 5pt solid green;
-	border-radius: 50%;
+	border-color: rgb(22, 255, 22);
+}
+
+li {
+	cursor: pointer;
+	list-style-type: none;
+	padding: 3px;
+}
+
+li:hover {
+	color: white;
+	background-color: rgb(255, 42, 42);
 }

@@ -46,7 +46,7 @@ const App = () => {
 
 	const currentScreenContainer =
 		screen === 'gameSelectionScreen' ? (
-			<GameSelectionWindow startGame={startGame} />
+			<GameSelectionWindow startGame={startGame} database={database} />
 		) : (
 			<GameScreen
 				image={currentPicture}

@@ -1,8 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import './GameEndWindow.css';
 
 const GameEndWindow = (props) => {
 	const [nameInputValue, setNameInputValue] = useState('');
+	const window = useRef(null);
+
+	useEffect(() => {
+		if (props.gameEnded) {
+			window.current.scrollIntoView({ block: 'center', inline: 'center' });
+		}
+	}, [props.gameEnded]);
 
 	const beatRecordForm = props.beatRecord ? (
 		<div id="beat-record-form">
@@ -28,9 +36,11 @@ const GameEndWindow = (props) => {
 	) : null;
 
 	return (
-		<div id="game-end-window">
-			<span>Congratulations!</span>
-			<span>{`You took ${props.time} seconds to finish the game.`}</span>
+		<div id="game-end-window" ref={window}>
+			<span id="congratulations">Congratulations!</span>
+			<span id="time-message">
+				You took <strong>{props.time}</strong> seconds to finish the game.
+			</span>
 			{beatRecordForm}
 			<button id="play-again-button" onClick={props.playAgain}>
 				Play Again
@@ -44,6 +54,7 @@ GameEndWindow.propTypes = {
 	playAgain: PropTypes.func,
 	beatRecord: PropTypes.bool,
 	submitName: PropTypes.func,
+	gameEnded: PropTypes.bool,
 };
 
 export default GameEndWindow;

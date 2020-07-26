@@ -8,13 +8,24 @@ import './GameScreen.css';
 
 const GameScreen = (props) => {
 	const openOptions = (i) => {
-		if (clickedPosition === null) {
+		if (
+			clickedPosition === null &&
+			!gameEnded &&
+			!identifiedPositions.some(
+				(position) =>
+					i[0] <= position[0] + 30 &&
+					i[0] >= position[0] - 30 &&
+					i[1] <= position[1] + 30 &&
+					i[1] >= position[1] - 30
+			)
+		) {
 			setClickedPosition(i);
 		}
 	};
 	const [gameEnded, setGameEnded] = useState(false);
 	const [clickedPosition, setClickedPosition] = useState(null);
-	const [identifiedPostions, setIdentifiedPositions] = useState([]);
+	const [identifiedPositions, setIdentifiedPositions] = useState([]);
+	const [identifiedCharacters, setIdentifiedCharacters] = useState([]);
 	const [wrongPosition, setWrongPosition] = useState(null);
 	const [time, setTime] = useState(0);
 	const [beatRecord, setBeatRecord] = useState(false);
@@ -77,11 +88,11 @@ const GameScreen = (props) => {
 				.collection('records')
 				.orderBy('time', 'desc')
 				.get();
-			const tenthRecord = documentQuery[0];
+			const lastRecord = documentQuery.docs[0];
 			if (
-				documentQuery.length < 10 ||
-				tenthRecord === undefined ||
-				tenthRecord.data().time > time
+				documentQuery.docs.length < 10 ||
+				lastRecord === undefined ||
+				lastRecord.data().time > time
 			) {
 				userRecordReference.current = await props.database.current
 					.collection('records')
@@ -89,8 +100,8 @@ const GameScreen = (props) => {
 						time,
 						addedTimestamp: firebase.firestore.FieldValue.serverTimestamp(),
 					});
-				if (tenthRecord !== undefined) {
-					tenthRecord.delete();
+				if (documentQuery.docs.length === 10 && lastRecord !== undefined) {
+					lastRecord.ref.delete();
 				}
 				setBeatRecord(true);
 			}
@@ -102,10 +113,10 @@ const GameScreen = (props) => {
 			setGameEnded(true);
 		};
 
-		if (identifiedPostions.length === 5) {
+		if (identifiedPositions.length === 5) {
 			checkGameEnd();
 		}
-	}, [identifiedPostions, props.database, props.userReference]);
+	}, [identifiedPositions, props.database, props.userReference]);
 
 	const validateChoice = async (character, position) => {
 		const document = await props.database.current
@@ -119,7 +130,8 @@ const GameScreen = (props) => {
 				document.data()[character][1] <= position[1] + 30 &&
 				document.data()[character][1] >= position[1] - 30
 			) {
-				setIdentifiedPositions(() => identifiedPostions.concat([position]));
+				setIdentifiedPositions(() => identifiedPositions.concat([position]));
+				setIdentifiedCharacters(() => identifiedCharacters.concat([character]));
 				setClickedPosition(null);
 			} else {
 				setWrongPosition(position);
@@ -149,42 +161,42 @@ const GameScreen = (props) => {
 			: {};
 
 	const waldoFoundCellStyle =
-		identifiedPostions[0] !== undefined
+		identifiedPositions[0] !== undefined
 			? {
-					top: `${identifiedPostions[0][1] - 30}px`,
-					left: `${identifiedPostions[0][0] - 30}px`,
+					top: `${identifiedPositions[0][1] - 30}px`,
+					left: `${identifiedPositions[0][0] - 30}px`,
 			  }
 			: {};
 
 	const wilmaFoundCellStyle =
-		identifiedPostions[1] !== undefined
+		identifiedPositions[1] !== undefined
 			? {
-					top: `${identifiedPostions[1][1] - 30}px`,
-					left: `${identifiedPostions[1][0] - 30}px`,
+					top: `${identifiedPositions[1][1] - 30}px`,
+					left: `${identifiedPositions[1][0] - 30}px`,
 			  }
 			: {};
 
 	const odlawFoundCellStyle =
-		identifiedPostions[2] !== undefined
+		identifiedPositions[2] !== undefined
 			? {
-					top: `${identifiedPostions[2][1] - 30}px`,
-					left: `${identifiedPostions[2][0] - 30}px`,
+					top: `${identifiedPositions[2][1] - 30}px`,
+					left: `${identifiedPositions[2][0] - 30}px`,
 			  }
 			: {};
 
 	const wizardWhitebeardFoundCellStyle =
-		identifiedPostions[3] !== undefined
+		identifiedPositions[3] !== undefined
 			? {
-					top: `${identifiedPostions[3][1] - 30}px`,
-					left: `${identifiedPostions[3][0] - 30}px`,
+					top: `${identifiedPositions[3][1] - 30}px`,
+					left: `${identifiedPositions[3][0] - 30}px`,
 			  }
 			: {};
 
 	const woofFoundCellStyle =
-		identifiedPostions[4] !== undefined
+		identifiedPositions[4] !== undefined
 			? {
-					top: `${identifiedPostions[4][1] - 30}px`,
-					left: `${identifiedPostions[4][0] - 30}px`,
+					top: `${identifiedPositions[4][1] - 30}px`,
+					left: `${identifiedPositions[4][0] - 30}px`,
 			  }
 			: {};
 
@@ -209,8 +221,9 @@ const GameScreen = (props) => {
 		<div
 			id="game-screen"
 			style={{ width: `${Math.floor(aspectRatio * 1700)}px` }}
+			className={gameEnded ? 'dim' : ''}
 		>
-			<GameScreenTopBar />
+			<GameScreenTopBar identifiedCharacters={identifiedCharacters} />
 			<div
 				id="image-grid"
 				style={{
@@ -219,26 +232,28 @@ const GameScreen = (props) => {
 					height: `1690px`,
 				}}
 				onClick={(e) => {
-					console.log(e.pageX, e.pageY);
 					openOptions([e.pageX, e.pageY]);
 				}}
+				className={gameEnded ? 'dim' : ''}
 			>
-				{Array(6)
-					.fill(0)
-					.map((v, i) => (
-						<div
-							className={
-								identifiedPostions.length > i
-									? 'image-cell-container found'
-									: i === 5 && wrongPosition !== null
-									? 'image-cell-container wrong'
-									: 'image-cell-container'
-							}
-							id={'image-cell-container-' + i}
-							key={i}
-							style={foundCellStyles[i]}
-						></div>
-					))}
+				{!gameEnded
+					? Array(6)
+							.fill(0)
+							.map((v, i) => (
+								<div
+									className={
+										identifiedPositions.length > i
+											? 'image-cell-container found'
+											: i === 5 && wrongPosition !== null
+											? 'image-cell-container wrong'
+											: 'image-cell-container'
+									}
+									id={'image-cell-container-' + i}
+									key={i}
+									style={foundCellStyles[i]}
+								></div>
+							))
+					: null}
 				<ul
 					className={
 						clickedPosition !== null ? 'drop-down' : 'drop-down hidden'
@@ -268,6 +283,7 @@ const GameScreen = (props) => {
 					playAgain={props.playAgain}
 					beatRecord={beatRecord}
 					submitName={submitName}
+					gameEnded={gameEnded}
 				/>
 			</div>
 		</div>

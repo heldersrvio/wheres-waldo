@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import image1 from '../images/resized/image1.jpg';
 import image2 from '../images/resized/image2.jpg';
 import image3 from '../images/resized/image3.jpg';
@@ -15,6 +15,31 @@ import './GameSelectionWindow.css';
 
 const GameSelectionWindow = (props) => {
 	const [chosenPicture, setChosenPicture] = useState(null);
+	const [displayLeaderboard, setDisplayLeaderboard] = useState(false);
+	const [leaderboadUsers, setLeaderboardUsers] = useState([]);
+
+	useEffect(() => {
+		const getRecords = async () => {
+			const query = await props.database.current
+				.collection('records')
+				.orderBy('time', 'asc')
+				.get();
+			setLeaderboardUsers(
+				query.docs.map((document) => {
+					return {
+						name:
+							document.data().name !== undefined
+								? document.data().name
+								: document.id,
+						time: document.data().time,
+					};
+				})
+			);
+		};
+		if (displayLeaderboard) {
+			getRecords();
+		}
+	}, [displayLeaderboard, props.database, setLeaderboardUsers]);
 
 	const choosePicture = (pictureId) => {
 		setChosenPicture(pictureId);
@@ -58,8 +83,14 @@ const GameSelectionWindow = (props) => {
 		);
 	});
 
-	return (
+	const mainWindow = (
 		<div id="game-selection-window">
+			<button
+				id="leaderboard-button"
+				onClick={() => setDisplayLeaderboard(true)}
+			>
+				Leaderboard
+			</button>
 			<div id="top-section">
 				<img
 					src={icon}
@@ -88,10 +119,35 @@ const GameSelectionWindow = (props) => {
 			</div>
 		</div>
 	);
+
+	const leaderboard = (
+		<div id="game-selection-window">
+			<button id="back-button" onClick={() => setDisplayLeaderboard(false)}>
+				⬅
+			</button>
+			<div id="leaderboard">
+				{leaderboadUsers.map((user) => {
+					return (
+						<div id="leaderboard-user">
+							<div id="leaderboard-user-name">
+								<span>{user.name}</span>
+							</div>
+							<div id="leaderboard-user-time">
+								<span>{user.time} seconds</span>
+							</div>
+						</div>
+					);
+				})}
+			</div>
+		</div>
+	);
+
+	return displayLeaderboard ? leaderboard : mainWindow;
 };
 
 GameSelectionWindow.propTypes = {
 	startGame: PropTypes.func,
+	database: PropTypes.object,
 };
 
 export default GameSelectionWindow;
