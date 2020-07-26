@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/Wheres-Waldo/static/css/main.cb7b6f6c.chunk.css",
+    "main.js": "/Wheres-Waldo/static/js/main.4bca8693.chunk.js",
+    "main.js.map": "/Wheres-Waldo/static/js/main.4bca8693.chunk.js.map",
+    "runtime-main.js": "/Wheres-Waldo/static/js/runtime-main.ff953b81.js",
+    "runtime-main.js.map": "/Wheres-Waldo/static/js/runtime-main.ff953b81.js.map",
+    "static/js/2.bed5606b.chunk.js": "/Wheres-Waldo/static/js/2.bed5606b.chunk.js",
+    "static/js/2.bed5606b.chunk.js.map": "/Wheres-Waldo/static/js/2.bed5606b.chunk.js.map",
+    "index.html": "/Wheres-Waldo/index.html",
+    "precache-manifest.8321017438ae06fc5fb74458af9cb426.js": "/Wheres-Waldo/precache-manifest.8321017438ae06fc5fb74458af9cb426.js",
+    "service-worker.js": "/Wheres-Waldo/service-worker.js",
+    "static/css/main.cb7b6f6c.chunk.css.map": "/Wheres-Waldo/static/css/main.cb7b6f6c.chunk.css.map",
+    "static/js/2.bed5606b.chunk.js.LICENSE.txt": "/Wheres-Waldo/static/js/2.bed5606b.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/Wheres-Waldo/static/media/background.66c23024.jpg",
+    "static/media/icon.png": "/Wheres-Waldo/static/media/icon.893a73e6.png",
+    "static/media/image2.jpg": "/Wheres-Waldo/static/media/image2.d567b4fb.jpg",
+    "static/media/image7.jpg": "/Wheres-Waldo/static/media/image7.c99a4cac.jpg",
+    "static/media/image8.jpg": "/Wheres-Waldo/static/media/image8.9812c003.jpg",
+    "static/media/image9.jpg": "/Wheres-Waldo/static/media/image9.0110edeb.jpg",
+    "static/media/waldo.jpg": "/Wheres-Waldo/static/media/waldo.e77477aa.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ff953b81.js",
+    "static/js/2.bed5606b.chunk.js",
+    "static/css/main.cb7b6f6c.chunk.css",
+    "static/js/main.4bca8693.chunk.js"
+  ]
+}
