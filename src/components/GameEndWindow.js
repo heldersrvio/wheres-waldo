@@ -7,8 +7,8 @@ const GameEndWindow = (props) => {
 	const beatRecordForm = props.beatRecord ? (
 		<div id="beat-record-form">
 			<span>
-				You're among the top 10 scorers. Please enter your name to be part of
-				the leaderboard.
+				You're among the top 10 scorers. Please enter your name to join the
+				leaderboard.
 			</span>
 			<div id="input-section">
 				<input

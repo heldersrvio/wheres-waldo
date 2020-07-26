@@ -1,0 +1,33 @@
+.hidden {
+	display: none;
+}
+
+#image-grid {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+.image-cell-container {
+	height: 60px;
+	width: 60px;
+	position: absolute;
+}
+
+.drop-down {
+	position: absolute;
+}
+
+.image-cell-container.wrong {
+	border: 5pt solid red;
+	border-radius: 50%;
+}
+
+.image-cell-container.found {
+	border: 5pt solid green;
+	border-radius: 50%;
+}

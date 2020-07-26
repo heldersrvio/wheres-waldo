@@ -4,11 +4,12 @@ import wilma from '../images/resized/wilma.jpg';
 import odlaw from '../images/resized/odlaw.jpg';
 import wizardwhitebeard from '../images/resized/wizardwhitebeard.jpg';
 import woof from '../images/resized/woof.jpg';
+import './GameScreenTopBar.css';
 
 const GameScreenTopBar = (props) => {
 	return (
 		<div id="top-bar">
-			<span>Find: </span>
+			<span id="find-span">Find: </span>
 			<div className="character-info">
 				<img src={waldo} alt="Brown-haired man with glasses and a beanie." />
 				<span>Waldo</span>

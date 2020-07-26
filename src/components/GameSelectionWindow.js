@@ -21,9 +21,9 @@ const GameSelectionWindow = (props) => {
 	};
 
 	const captions = [
-		'Chaos in Troy',
+		'Horseplay in Troy',
 		'The Gold Rush',
-		'Sports Confusion',
+		'Winter sports',
 		'At the Beach',
 		'The Great Escape',
 		'Lost in the Future',
